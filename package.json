@@ -1,0 +1,16 @@
+{
+  "name": "ApiaiHook",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Simple node api for api.ai",
+  "author": "Stéphane Castrec <stephane.castrec@gmail.com>",
+  "dependencies": {
+    "express": ""
+  },
+  "scripts" : {
+    "start" : "node main.js"
+  },
+  "engines" : {
+    "node" : ">=0.6"
+  }
+}
