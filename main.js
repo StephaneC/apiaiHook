@@ -23,8 +23,8 @@ app.post('/apiwebhook', function(req, res){
     if(request.result){
       switch (request.result.action) {
         case 'action.weather':
-          if(request.result.parameters && request.result.parameters.geo-city){
-            cityWeather(request.result.parameters.geo-city, function(result){
+          if(request.result.parameters && request.result.parameters['geo-city']){
+            cityWeather(request.result.parameters['geo-city'], function(result){
               res.send(result);
             });
           } else {
