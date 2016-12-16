@@ -15,14 +15,14 @@ app.post('/apiwebhook', function(req, res){
   } else {
     console.log("apiwebhook "+ req.body);
       weatherApi.getCurrentWeather('paris', function(re){
-        console.log("Data received by weatherMap : " + JSON.stringify(re));
+        //console.log("Data received by weatherMap : " + JSON.stringify(re));
         var response = {
           speech : re.speech,
           displayText: re.speech,
           data: re,
           source: 'Crédit Mutuel Arkéa',
         };
-      console.log("result "+re);
+      console.log("result "+JSON.stringify(re));
       res.send(response);
     });
   }

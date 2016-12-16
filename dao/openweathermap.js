@@ -5,8 +5,8 @@ var baseUrl = 'http://api.openweathermap.org/data/2.5';
 
 
 var createWheaterURL = function(city){
-  console.log(baseUrl + '/weather?&lang=fr&q='+city+"&APPID="+conf.openweathermap.apiKey);
-  return baseUrl + '/weather?&lang=fr&q='+city+"&APPID="+conf.openweathermap.apiKey;
+  console.log(baseUrl + '/weather?units=metric&lang=fr&q='+city+"&APPID="+conf.openweathermap.apiKey);
+  return baseUrl + '/weather?units=metric&lang=fr&q='+city+"&APPID="+conf.openweathermap.apiKey;
 }
 
 var getCurrentWeather = function(city, callback){
@@ -16,7 +16,7 @@ var getCurrentWeather = function(city, callback){
   }
   http.get(createWheaterURL(city), function(res){
     const statusCode = res.statusCode;
-    console.log("Weather api - status code: "+statusCode);
+    console.log("Weather api - status code: " + statusCode);
     var error = {};
     if(statusCode != 200){
       error.statusCode = statusCode;
@@ -30,7 +30,8 @@ var getCurrentWeather = function(city, callback){
     res.on('end', () => {
       try {
         var parsedData = JSON.parse(rawData);
-        console.log(parsedData);
+        parsedData.speech = createSpeech(parsedData);
+        console.log(parsedData.speech);
         if(callback){
           callback(parsedData);
         }
@@ -53,6 +54,12 @@ var getCurrentWeather = function(city, callback){
     err.msg = e;
     return err;
     });
+}
+
+var createSpeech = function(data){
+  var speech = 'Le temps à ' + data.name + ' est ' + data.weather[0].description
+              + ' La température est de ' + data.main.temp + '°C.';
+  return speech;
 }
 
 module.exports = {
