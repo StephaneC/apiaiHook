@@ -20,22 +20,34 @@ app.post('/apiwebhook', function(req, res){
   } else {
     console.log("apiwebhook "+ JSON.stringify(req.body));
     var request = req.body;
-    switch (request.action) {
-      case 'action.weather':
-        cityWeather('paris', function(result){
-          res.send(result);
-        });
-        break;
-        case 'action.time':
-          getTime(function(result){
-            res.send(result);
-          });
+    if(request.result){
+      switch (request.result.action) {
+        case 'action.weather':
+          if(request.result.parameters && request.result.parameters.geo-city){
+            cityWeather(request.result.parameters.geo-city, function(result){
+              res.send(result);
+            });
+          } else {
+            var txt = 'Nous n\'avons pas compris l\'endroit où vous souhaitez connaitre le temps.';
+            var err = apiHelper.createError(500, txt);
+            res.send(err);
+          }
           break;
-      default:
-        var txt = 'Nous n\'avons pas compris votre question. Que vouliez vous dire?';
-        var err = apiHelper.createError(500, txt);
-        res.send(err);
-        break;
+          case 'action.time':
+            getTime(function(result){
+              res.send(result);
+            });
+            break;
+        default:
+          var txt = 'Nous n\'avons pas compris votre question. Que vouliez vous dire?';
+          var err = apiHelper.createError(500, txt);
+          res.send(err);
+          break;
+      }
+    } else {
+      var txt = 'Nous n\'avons pas compris votre question. Que vouliez vous dire?';
+      var err = apiHelper.createError(500, txt);
+      res.send(err);
     }
   }
 });
