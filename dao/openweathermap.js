@@ -1,5 +1,6 @@
 var http = require('http');
 var conf = require('../env.json');
+var apiHelper = require('../apiaiHelper.js');
 
 var baseUrl = 'http://api.openweathermap.org/data/2.5';
 
@@ -17,9 +18,8 @@ var getCurrentWeather = function(city, callback){
   http.get(createWheaterURL(city), function(res){
     const statusCode = res.statusCode;
     console.log("Weather api - status code: " + statusCode);
-    var error = {};
     if(statusCode != 200){
-      error.statusCode = statusCode;
+      var error = apiHelper.createError(statusCode, 'Une erreur est survenue. Merci de ré-essayer!');
       if(callback){
         callback(error);
       }
@@ -38,21 +38,17 @@ var getCurrentWeather = function(city, callback){
         return parsedData;
       } catch (e){
         console.log(e);
-        var err = {};
-        err.statusCode = statusCode;
-        err.msg = e;
+        var error = apiHelper.createError(statusCode, 'Une erreur est survenue. Merci de ré-essayer!');
         if(callback){
-          callback(err);
+          callback(error);
         }
-        return err;
+        return error;
       }
     });
   }).on("error", function(e){
     console.log("Got error: " + e.message);
-    var err = {};
-    err.statusCode = statusCode;
-    err.msg = e;
-    return err;
+    var error = apiHelper.createError(statusCode, 'Une erreur est survenue. Merci de ré-essayer!');
+    return error;
     });
 }
 
@@ -61,6 +57,8 @@ var createSpeech = function(data){
               + ' La température est de ' + data.main.temp + '°C.';
   return speech;
 }
+
+
 
 module.exports = {
   getCurrentWeather : getCurrentWeather

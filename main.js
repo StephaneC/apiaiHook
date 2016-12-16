@@ -1,40 +1,45 @@
 var weatherApi = require('./dao/openweathermap.js');
+var apiHelper = require('./apiaiHelper.js');
 
+var bodyParser = require('body-parser')
 var express = require('express');
 var app = express();
 
 var http = require('http').Server(app);
 var myApiKey = "MyAuthenticationTokenIsHereAndIWillFoundABetterLater";
 
+/** understand JSON in body. */
+app.use(bodyParser);
+
 app.post('/apiwebhook', function(req, res){
   //check authentication
   if(req.header('token', null) != myApiKey){
-    console.log("token inccorect : " + req.headers('token'))
+    console.log("token inccorect : " + req.headers('token'));
     res.statusCode = 401;
     res.send('error');
   } else {
     console.log("apiwebhook "+ req.body);
-      weatherApi.getCurrentWeather('paris', function(re){
-        //console.log("Data received by weatherMap : " + JSON.stringify(re));
-        var response = {
-          speech : re.speech,
-          displayText: re.speech,
-          data: re,
-          source: 'Crédit Mutuel Arkéa',
-        };
-      console.log("result "+JSON.stringify(re));
-      res.send(response);
-    });
+    var request = JSON.parse(req.body);
+    switch (request.action) {
+      case 'action.weather':
+        cityWeather('paris', function(result){
+          res.send(result);
+        });
+        break;
+        case 'action.time':
+          getTime(function(result){
+            res.send(result);
+          });
+          break;
+      default:
+        var txt = 'Nous n\'avons pas compris votre question. Que vouliez vous dire?';
+        var err = apiHelper.createError(txt, txt);
+        res.send(err);
+        break;
+    }
   }
 });
 
-app.post('/apiwebhook', function(req, res){
-  //check authentication
-    weatherApi.getCurrentWeather('paris', function(re){
-    console.log("result "+re);
-    res.send(re);
-  });
-});
 
 app.get('/time', function(req, res){
   //check authentication
@@ -44,3 +49,21 @@ app.get('/time', function(req, res){
 http.listen(8080, function(){
   console.log('listening on *:8080');
 });
+
+
+var cityWeather = function(location, cb){
+  weatherApi.getCurrentWeather(location, function(re){
+    var response = apiHelper.createResponse(re.speech, re.speech, re, 'OpenweatherMap');
+    cb(response);
+  });
+}
+
+var getTime = function(cb){
+  weatherApi.getCurrentWeather('paris', function(re){
+    //console.log("Data received by weatherMap : " + JSON.stringify(re));
+    var date = new Date();
+    var speech =  'Il est ' + date.getUTCHours() + ':' + date.getUTCMinutes() + 'et ' + date.getUTCSeconds() + " secondes.";
+    var response = apiHelper.createResponse(speech, speech, date);
+    cb(response);
+  });
+}
