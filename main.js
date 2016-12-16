@@ -18,8 +18,8 @@ app.post('/apiwebhook', function(req, res){
     res.statusCode = 401;
     res.send('error');
   } else {
-    console.log("apiwebhook "+ req.body);
-    var request = JSON.parse(req.body);
+    console.log("apiwebhook "+ JSON.stringify(req.body));
+    var request = req.body;
     switch (request.action) {
       case 'action.weather':
         cityWeather('paris', function(result){
@@ -33,7 +33,7 @@ app.post('/apiwebhook', function(req, res){
           break;
       default:
         var txt = 'Nous n\'avons pas compris votre question. Que vouliez vous dire?';
-        var err = apiHelper.createError(txt, txt);
+        var err = apiHelper.createError(500, txt);
         res.send(err);
         break;
     }

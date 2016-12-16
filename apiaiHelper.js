@@ -1,8 +1,3 @@
-module.exports = {
-  createError : createError,
-  createResponse : createResponse
-};
-
 var defaultSource = 'Crédit Mutuel Arkéa';
 
 var createError = function(statusCode, message){
@@ -29,4 +24,9 @@ var createResponse = function(speech, message, data, source){
   }
 
   return response;
+};
+
+module.exports = {
+  createError : createError,
+  createResponse : createResponse
 };
