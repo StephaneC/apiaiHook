@@ -14,7 +14,6 @@ app.post('/apiwebhook', function(req, res){
     res.send('error');
   } else {
     console.log("apiwebhook "+ req.body);
-    //TODO router
       weatherApi.getCurrentWeather('paris', function(re){
         console.log("Data received by weatherMap : " + JSON.stringify(re));
         var response = {
