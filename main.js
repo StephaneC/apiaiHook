@@ -7,16 +7,24 @@ var http = require('http').Server(app);
 var myApiKey = "MyAuthenticationTokenIsHereAndIWillFoundABetterLater";
 
 app.post('/apiwebhook', function(req, res){
-  if(req.headers('token') != myApiKey){
+  //check authentication
+  if(req.header('token', null) != myApiKey){
     console.log("token inccorect : " + req.headers('token'))
     res.statusCode = 401;
     res.send('error');
   } else {
     console.log("apiwebhook "+ req.body);
-    //check authentication
+    //TODO router
       weatherApi.getCurrentWeather('paris', function(re){
+        console.log("Data received by weatherMap : " + JSON.stringify(re));
+        var response = {
+          speech : re.speech,
+          displayText: re.speech,
+          data: re,
+          source: 'Crédit Mutuel Arkéa',
+        };
       console.log("result "+re);
-      res.send(re);
+      res.send(response);
     });
   }
 });
