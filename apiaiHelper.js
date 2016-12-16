@@ -14,6 +14,9 @@ var createError = function(statusCode, message){
 };
 
 var createResponse = function(speech, message, data, source){
+  data.slack = {
+    text : message
+  };
   var response = {
     speech : speech,
     displayText: message,
