@@ -6,7 +6,7 @@ var app = express();
 var http = require('http').Server(app);
 var myApiKey = "MyAuthenticationTokenIsHereAndIWillFoundABetterLater";
 
-app.get('/apiwebhook', function(req, res){
+app.post('/apiwebhook', function(req, res){
   if(req.headers('token') != myApiKey){
     console.log("token inccorect : " + req.headers('token'))
     res.statusCode = 401;
