@@ -71,11 +71,8 @@ var cityWeather = function(location, cb){
 }
 
 var getTime = function(cb){
-  weatherApi.getCurrentWeather('paris', function(re){
-    //console.log("Data received by weatherMap : " + JSON.stringify(re));
-    var date = new Date();
-    var speech =  'Il est ' + date.getUTCHours() + ':' + date.getUTCMinutes() + 'et ' + date.getUTCSeconds() + " secondes.";
-    var response = apiHelper.createResponse(speech, speech, date);
-    cb(response);
-  });
+  var date = new Date();
+  var speech =  'Il est ' + date.getUTCHours() + ':' + date.getUTCMinutes() + ' et ' + date.getUTCSeconds() + " secondes.";
+  var response = apiHelper.createResponse(speech, speech, date);
+  cb(response);
 }
