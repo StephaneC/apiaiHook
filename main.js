@@ -9,7 +9,7 @@ var http = require('http').Server(app);
 var myApiKey = "MyAuthenticationTokenIsHereAndIWillFoundABetterLater";
 
 /** understand JSON in body. */
-app.use(bodyParser);
+app.use(bodyParser.json());
 
 app.post('/apiwebhook', function(req, res){
   //check authentication
