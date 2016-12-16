@@ -5,7 +5,8 @@
   "description": "Simple node api for api.ai",
   "author": "Stéphane Castrec <stephane.castrec@gmail.com>",
   "dependencies": {
-    "express": ""
+    "express": "4.14.0",
+    "body-parser":"1.15.2"
   },
   "scripts" : {
     "start" : "node main.js"
