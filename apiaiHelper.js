@@ -10,6 +10,7 @@ var createError = function(statusCode, message){
     },
     source:defaultSource
   };
+  return response;
 };
 
 var createResponse = function(speech, message, data, source){
