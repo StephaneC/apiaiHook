@@ -49,15 +49,14 @@ var search = function(search, callback){
 var createSpeech = function(data){
   var speech = 'Hey, j\'ai trouvé ' + data.items.length + ' articles. Le plus intéressant semble : '
               + data.items[0].title + ' accessible ici : ' + data.items[0].link;
-              
+
   return speech;
 }
 
 var createUrl = function(search){
-  return 'https://www.googleapis.com/customsearch/v1?key=AIzaSyAG0wRblBH7_t9NqRy3tBbTK3ATBc16_Bc&cx=017745782665453603834:tx9x_hgx5ku&q=livret%20A';/*
   return url + paramKey + conf.google.apiKey
       + paramSearchId + conf.google.customSearchId
-      + paramSearch + encodeURIComponent(search);*/
+      + paramSearch + encodeURIComponent(search);
 }
 
 module.exports = {
