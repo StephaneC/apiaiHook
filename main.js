@@ -1,4 +1,5 @@
 var weatherApi = require('./dao/openweathermap.js');
+var searchApi = require('./dao/googlesearch.js');
 var apiHelper = require('./apiaiHelper.js');
 
 var bodyParser = require('body-parser')
@@ -39,9 +40,9 @@ app.post('/apiwebhook', function(req, res){
             });
             break;
         default:
-          var txt = 'Nous n\'avons pas compris votre question. Que vouliez vous dire?';
-          var err = apiHelper.createError(500, txt);
-          res.send(err);
+          searchApi.search("Livret A", function(result){
+            res.send(result);            
+          });
           break;
       }
     } else {
