@@ -40,8 +40,8 @@ app.post('/apiwebhook', function(req, res){
             });
             break;
         default:
-          searchApi.search("Livret A", function(result){
-            res.send(result);            
+          searchApi.search(request.result.resolvedQuery, function(result){
+            res.send(result);
           });
           break;
       }
