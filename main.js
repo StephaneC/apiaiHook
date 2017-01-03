@@ -26,6 +26,7 @@ app.post('/apiwebhook', function(req, res){
         case 'action.weather':
           if(request.result.parameters && request.result.parameters['geo-city']){
             cityWeather(request.result.parameters['geo-city'], function(result){
+              console.log("action.weather - result: "+ JSON.stringify(result));
               res.send(result);
             });
           } else {
@@ -36,11 +37,13 @@ app.post('/apiwebhook', function(req, res){
           break;
           case 'action.time':
             getTime(function(result){
+              console.log("action.time - result: "+ JSON.stringify(result));
               res.send(result);
             });
             break;
         default:
           searchApi.search(request.result.resolvedQuery, function(result){
+            console.log("default search - result: "+ JSON.stringify(result));
             res.send(result);
           });
           break;
