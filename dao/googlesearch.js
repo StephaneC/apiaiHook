@@ -25,6 +25,7 @@ var search = function(search, callback){
       try {
         var parsedData = JSON.parse(rawData);
         parsedData.speech = createSpeech(parsedData);
+        parsedData.speechHtml = createSpeechHtml(parsedData);
         console.log(parsedData.speech);
         if(callback){
           callback(parsedData);
@@ -49,6 +50,13 @@ var search = function(search, callback){
 var createSpeech = function(data){
   var speech = 'Hey, j\'ai trouvé ' + data.items.length + ' articles. Le plus intéressant semble : '
               + data.items[0].title + ' accessible ici : ' + data.items[0].link;
+
+  return speech;
+}
+
+var createSpeechHtml = function(data){
+  var speech = 'Hey, j\'ai trouvé ' + data.items.length + ' articles. Le plus intéressant semble : '
+              + '<a href="' + data.items[0].link + '">' +data.items[0].title + '</a>';
 
   return speech;
 }
