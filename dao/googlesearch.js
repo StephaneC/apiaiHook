@@ -3,7 +3,7 @@ var conf = require('../env.json');
 var apiHelper = require('../apiaiHelper.js');
 
 
-var url = 'https://www.googleapis.com/customsearch/v1?;'
+var url = 'https://www.googleapis.com/customsearch/v1?';
 var paramSearch ="&q=";
 var paramKey ="&Key=";
 var paramSearchId ="&cx=";
