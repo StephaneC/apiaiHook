@@ -78,7 +78,8 @@ var cityWeather = function(location, cb){
 
 var getTime = function(cb){
   var date = new Date();
+  var data = {};
   var speech =  'Il est ' + date.getUTCHours() + ':' + date.getUTCMinutes() + ' et ' + date.getUTCSeconds() + " secondes.";
-  var response = apiHelper.createResponse(speech, speech, date);
+  var response = apiHelper.createResponse(speech, speech, data, 'Crédit Mutuel Arkéa');
   cb(response);
 }
