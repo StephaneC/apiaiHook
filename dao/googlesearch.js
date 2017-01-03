@@ -24,13 +24,14 @@ var search = function(search, callback){
     res.on('end', () => {
       try {
         var parsedData = JSON.parse(rawData);
-        parsedData.speech = createSpeech(parsedData);
+        var result = apiHelper.createResponse(createSpeech(parsedData), createSpeechHtml(parsedData), {}, "Crédit Mutuel Arkéa");
+        /*parsedData.speech = createSpeech(parsedData);
         parsedData.speechHtml = createSpeechHtml(parsedData);
-        console.log(parsedData.speech);
+        console.log(parsedData.speech);*/
         if(callback){
-          callback(parsedData);
+          callback(result);
         }
-        return parsedData;
+        return result;
       } catch (e){
         console.log(e);
         var error = apiHelper.createError(statusCode, 'Une erreur est survenue. Merci de ré-essayer!');
