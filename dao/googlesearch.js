@@ -5,7 +5,7 @@ var apiHelper = require('../apiaiHelper.js');
 
 var url = 'https://www.googleapis.com/customsearch/v1?';
 var paramSearch ="&q=";
-var paramKey ="&Key=";
+var paramKey ="&key=";
 var paramSearchId ="&cx=";
 
 var search = function(search, callback){
