@@ -35,13 +35,15 @@ app.post('/apiwebhook', function(req, res){
             res.send(err);
           }
           break;
-          case 'action.time':
+        case 'action.time':
+            console.log("action.time");
             getTime(function(result){
               console.log("action.time - result: "+ JSON.stringify(result));
               res.send(result);
             });
             break;
         default:
+          console.log("action default");
           searchApi.search(request.result.resolvedQuery, function(result){
             console.log("default search - result: "+ JSON.stringify(result));
             res.send(result);
