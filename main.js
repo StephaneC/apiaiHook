@@ -11,7 +11,23 @@ var myApiKey = "MyAuthenticationTokenIsHereAndIWillFoundABetterLater";
 
 /** understand JSON in body. */
 app.use(bodyParser.json());
+app.post('/apiwebhook', function(req, res){
+  var request = req.body;
+  if(request.intent){
+    switch (request.intent.name) {
+      case 'HorlogeParlante':
+      console.log("action.time");
+      getTime(function(result){
+        console.log("action.time - result: "+ JSON.stringify(result));
+        res.send(result);
+      });
+      break;
 
+
+    }
+  }
+
+});
 app.post('/apiwebhook', function(req, res){
   //check authentication
   if(req.header('token', null) != myApiKey){
