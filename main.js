@@ -11,7 +11,8 @@ var myApiKey = "MyAuthenticationTokenIsHereAndIWillFoundABetterLater";
 
 /** understand JSON in body. */
 app.use(bodyParser.json());
-app.post('/apiwebhook', function(req, res){
+app.post('/alexahook', function(req, res){
+  console.log('Received alexahook');
   var request = req.body;
   if(request.intent){
     switch (request.intent.name) {
