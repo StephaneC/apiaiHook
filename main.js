@@ -1,6 +1,8 @@
 var weatherApi = require('./dao/openweathermap.js');
 var searchApi = require('./dao/googlesearch.js');
 var apiHelper = require('./apiaiHelper.js');
+var alexaHelper = require('./alexaHelper.js');
+
 
 var bodyParser = require('body-parser')
 var express = require('express');
@@ -19,7 +21,10 @@ app.post('/alexahook', function(req, res){
       case 'HorlogeParlante':
       console.log("action.time");
       getTime(function(result){
-        console.log("action.time - result: "+ JSON.stringify(result));
+        var date = new Date();
+        var data = {};
+        var speech =  'Il est ' + date.getUTCHours() + ':' + date.getUTCMinutes() + ' et ' + date.getUTCSeconds() + " secondes.";
+        var response = alexaHelper.createResponse(speech, speech, data, 'Crédit Mutuel Arkéa');
         res.send(result);
       });
       break;
