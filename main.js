@@ -13,7 +13,7 @@ var myApiKey = "MyAuthenticationTokenIsHereAndIWillFoundABetterLater";
 
 /** understand JSON in body. */
 app.use(bodyParser.json());
-app.post('/alexahook', function(req, res){
+app.get('/alexahook', function(req, res){
   console.log('Received alexahook');
   var request = req.body;
   if(request.request.intent){
