@@ -16,17 +16,15 @@ app.use(bodyParser.json());
 app.post('/alexahook', function(req, res){
   console.log('Received alexahook');
   var request = req.body;
-  if(request.intent){
-    switch (request.intent.name) {
+  if(request.request.intent){
+    switch (request.request.intent.name) {
       case 'HorlogeParlante':
       console.log("action.time");
-      getTime(function(result){
         var date = new Date();
         var data = {};
         var speech =  'Il est ' + date.getUTCHours() + ':' + date.getUTCMinutes() + ' et ' + date.getUTCSeconds() + " secondes.";
         var response = alexaHelper.createResponse(speech, speech, data, 'Crédit Mutuel Arkéa');
-        res.send(result);
-      });
+        res.send(response);
       break;
 
 
