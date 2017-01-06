@@ -16,21 +16,34 @@ app.use(bodyParser.json());
 app.get('/alexahook', function(req, res){
   console.log('Received alexahook');
   var request = req.body;
-  if(request.request.intent){
-    switch (request.request.intent.name) {
-      case 'HorlogeParlante':
-      console.log("action.time");
-        var date = new Date();
-        var data = {};
-        var speech =  'Il est ' + date.getUTCHours() + ':' + date.getUTCMinutes() + ' et ' + date.getUTCSeconds() + " secondes.";
-        var response = alexaHelper.createResponse(speech, speech, data, 'Crédit Mutuel Arkéa');
+  switch(request.request.type){
+    case 'LaunchRequest':
+    //TODO
+    var response = alexaHelper.createResponse('bonjour', 'bonjour', data, 'Crédit Mutuel Arkéa');
+    res.send(response);
+    break;
+    case 'IntentRequest':
+      switch (request.request.intent.name) {
+        case 'HorlogeParlante':
+        console.log("action.time");
+          var date = new Date();
+          var data = {};
+          var speech =  'Il est ' + date.getUTCHours() + ':' + date.getUTCMinutes() + ' et ' + date.getUTCSeconds() + " secondes.";
+          var response = alexaHelper.createResponse(speech, speech, data, 'Crédit Mutuel Arkéa');
+          res.send(response);
+        break;
+        default:
+        var response = alexaHelper.createResponse('bonjour', 'bonjour', data, 'Crédit Mutuel Arkéa');
         res.send(response);
-      break;
-
-
-    }
+        break;
+      }
+    break;
+    case 'SessionEndedRequest':
+    //TODO
+    var response = alexaHelper.createResponse('bonjour', 'bonjour', data, 'Crédit Mutuel Arkéa');
+    res.send(response);
+    break;
   }
-
 });
 app.post('/apiwebhook', function(req, res){
   //check authentication
