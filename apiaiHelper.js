@@ -1,4 +1,4 @@
-var defaultSource = 'Crédit Mutuel Arkéa';
+var defaultSource = 'Stéphane Castrec';
 
 var createError = function(statusCode, message){
   var response = {
